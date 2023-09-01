@@ -13,10 +13,24 @@ document.querySelector('.again').addEventListener('click', function () {
 
     // Clear the timer interval when starting a new game
     clearInterval(timerInterval);
+
+    // Clear the message
+    document.querySelector(".message").textContent = "Start guessing...";
 });
 
 document.querySelector('.check').addEventListener('click', () => {
     let guess = Number(document.querySelector('.guess').value);
+
+    // Start the timer when the "Check!" button is clicked
+    if (!timerInterval) {
+        timerInterval = setInterval(() => {
+            time[1]++;
+            if (time[1] % 60 === 0) {
+                time[0]++;
+            }
+            document.getElementById('timer').innerHTML = `${time[0]}:${time[1]}`;
+        }, 1000);
+    }
 
     if (!guess) {
         document.querySelector(".message").textContent = "Not a valid input";
@@ -48,11 +62,5 @@ document.querySelector('.check').addEventListener('click', () => {
 
 // Start the timer when the page loads
 window.addEventListener('load', () => {
-    timerInterval = setInterval(() => {
-        time[1]++;
-        if (time[1] % 60 === 0) {
-            time[0]++;
-        }
-        document.getElementById('timer').innerHTML = `${time[0]}:${time[1]}`;
-    }, 1000);
+    document.querySelector('.message').textContent = "Start guessing...";
 });
